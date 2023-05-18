@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>깜빡이텍스트</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 100px;
+        }
+    </style>
+    <script>
+        let flag = false;
+
+        //삼항연산자로 풀기
+        function blink() {
+            //js의 style.display를 이용해 block과 none을 번갈아가면서 처리 
+            let h1 = document.querySelector("h1");
+
+            let option = (flag) ? "block" : "none";
+            h1.style.display = option;
+            flag = !flag;
+
+        }
+
+        //if문으로 풀기
+        function blink2(){
+            let h1 = document.querySelector("h1");
+            
+            if(flag==false){
+            h1.style.display = "none";
+            }else{
+            h1.style.display = "block";
+            }
+            flag=!flag;
+        }
+
+        addEventListener("load", function () {
+
+            setInterval("blink2()", 100);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>INSERT COIN</h1>
+</body>
+
+</html>

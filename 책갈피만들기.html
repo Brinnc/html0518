@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책갈피만들기</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #cover {
+            width: 300px;
+            height: 200px;
+            background: red;
+            border-radius: 15px;
+            padding-left: 120px;
+            padding-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: aliceblue;
+            box-sizing: border-box;
+        }
+
+        #text{
+            width: 200px;
+            height: 200px;
+            background: black;
+            border-radius: 15px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+
+        let targetX = -100;
+        let a = 0.1;
+        let cover;
+
+        let flag = false;
+
+        function draw() {
+
+            if (flag == true) {
+                targetX = -100;
+            } else {
+                targetX = -250;
+            }
+            //감속도공식: 나의위치=현재나의위치+비율계수a*(목표지점-현재나의위치)
+            cover.style.left = parseFloat(cover.style.left) + a * (targetX - parseFloat(cover.style.left)) + "px";
+        }
+
+        function loop() {
+
+            draw();
+
+        }
+
+        function init() {
+
+            cover = document.getElementById("cover");
+            cover.style.position = "relative";
+            cover.style.left = -250 + "px";
+
+        }
+
+        addEventListener("load", function () {
+
+            init();
+
+            //cover에 클릭 이벤트 연결
+            document.getElementById("cover").addEventListener("click", function () {
+                //console.log("뿅");
+                //draw(); 논리값아어야 할 듯..
+                flag = !flag;
+            });
+
+            setInterval("loop()", 1);
+        })
+    </script>
+</head>
+
+<body>
+    <div id="cover">
+        <div id="text">
+
+            <ul>
+                <li>HOME🏡</li>
+                <li>About</li>
+                <li>Product</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+
+</html>

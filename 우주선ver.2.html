@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키보드와 버튼 연동한 이동</title>
+    <style>
+        body {
+            margin: 0px;
+            /*body에 적용되는 기본 마진을 없앰*/
+        }
+
+        #stage {
+            width: 900px;
+            height: 600px;
+            background: url(../images/bg2.png);
+            margin: auto;
+            /*★자식 요소가 포지션을 명시하면, 반드시 부모요소에도 포지션이 명시되어있어야 함(!!원칙!!)*/
+            position: relative;
+        }
+    </style>
+    <script>
+        let x = 0; //stage 배경의 x축값을 누적시킬 변수
+        //누적되어야하므로 전역변수로 선언함.
+
+        let flag = true;
+
+        let stage; //모든 함수들에서 접근할 수 있도록 전역 변수로 선언
+        let img; //모든 함수들에서 이미지를 접근할 수 있도록 전역변수로 선언
+        let n = 100; //0이 아닌 100으로 초기값을 결정한 이유는 img가 생성될때 
+        //즉, 우주선이 생성될 때 left값이 100이었으므로, 어색하지 않게 하기위해.
+
+        let m = 100; //위 아래 방향인 y축 위치에 사용될 전역 변수
+
+
+        //배경을 js에서 제어해보자(우측에서 좌측방향으로 x축값을 감소)
+        function bgEffect() {
+            //문서 내의 스테이지라는 요소 내 div에 적용된 배경 css의 left값을 감소
+
+            x = x - 1; // x-=1
+            stage.style.backgroundPosition = x + "px 0px";
+        }
+
+        //우주선 등장시키기
+        function createPlane() {
+            img = document.createElement("img");
+            img.src = "../images/Biplane_HD.png";
+            img.style.width = 70 + "px";
+            //우주선을 스테이지 내에서 즉, 부모를 기준으로 해서 xy좌표를 개발자가 결정해야하므로,
+            //절대위치 속성으로 변경해야함
+            img.style.position = "absolute";
+            img.style.left = 100 + "px"; //x
+            img.style.top = 100 + "px"; //y
+
+            //stage에 자식요소로 부착하기
+            stage.appendChild(img);
+        }
+
+
+        //우주선 x축 위치 변경하기
+        function move() {
+            //문서 내의 우주선 img요소의 스타일 중 left 값을 증가하고 감소함
+           
+            
+            //step = (n >= 500 || n <= 0) ? -step : step;
+
+
+            if (flag) {
+                n=n+5;
+            } else {
+                n=n-5;
+            }
+            if (n >= 500 || n <= 0) {
+                flag = !flag;
+            }
+
+            img.style.left = n + "px";
+
+
+        }
+
+        /*
+        //직접적인 x값에 조건을 주는 것이 아닌 논리값 필요
+        let flag=true;
+
+        //게임을 진행할 루프
+        function loop() {
+            if(flag){
+                x++;
+            }else{
+                x--;
+            }
+            if(x>=500 || x<=0){
+                flag=!flag;
+            }
+
+            
+            wrapper.style.left = x + "px";
+        */
+
+
+        /*
+        if (n >= 500) {
+            n-=5;
+        } else if (n <= 0) {
+            n+=5;
+        }
+        */
+
+
+
+
+
+
+
+        /*
+        function moveLeft() {
+             n = n - 5;
+             img.style.left = n + "px";
+         }
+ 
+         //우주선 y축 위치 변경하기
+         function moveUp() {
+             m = m - 5;
+             img.style.top = m + "px";
+         }
+ 
+         function moveDown() {
+             m = m + 5;
+             img.style.top = m + "px";
+         }
+         */
+
+        window.addEventListener("load", function () {
+
+            stage = document.getElementById("stage");
+
+            //컴퓨터가 알아서 원하는 시간 간격으로 개발자가 지정한 함수를 호출해주는 루프함수 이용
+            setInterval("bgEffect()", 10); // 1/1000 초까지 표현가능
+            createPlane(); //우주선 등장 함수 호출
+
+            //이동버튼에 대해 이벤트 연결
+            let bt = document.querySelector("button");
+
+            bt.addEventListener("click", function () {
+                move();
+
+            });
+
+
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="stage">
+        <button>이동</button>
+    </div>
+</body>
+
+</html>

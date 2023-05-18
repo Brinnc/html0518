@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+        #wrapper{
+            width: 100%;
+            height: 700px;
+            background: skyblue;
+        }
+    </style>
+    <script>
+        let img; //모든 함수에서 접근할 수 있도록 전역변수 선언
+        let x=0; //우주선의 x값을 좌우하는 변수
+        let y=0; //우주선의 y값을 좌우하는 변수
+        let a=0.009;
+
+        //우주선을 원하는 위치에 두기 위한 함수
+        function move(){
+            //감속도공식: 나의위치=현재나의위치+비율계수a*(목표지점-현재나의위치)
+            img.style.left=parseFloat(img.style.left)+a*(x-parseFloat(img.style.left))+"px";
+            img.style.top=parseFloat(img.style.top)+a*(y-parseFloat(img.style.top))+"px";
+
+        }
+
+        //우주선의 위치 및 크기 등의 초기화 작업을 진행
+        function init(){
+            img=document.createElement("img"); //<img>
+            img.src="../images/Biplane_HD.png"; //<img src="">
+            img.style.width=70+"px";
+            img.style.position="absolute"; //부모를 기준으로 하는 절대위치
+            img.style.left=100+"px";
+            img.style.top=150+"px";
+
+            //wrapper의 자식요소로 추가하기
+            let wrapper=document.getElementById("wrapper");
+            wrapper.appendChild(img);
+
+        }
+
+
+        addEventListener("load", function(){
+            init();
+            setInterval("move()", 10);
+
+            document.body.addEventListener("mousemove", function(){
+                //클릭한 곳의 좌표(마우스의 x,y) 얻기
+                let posX=event.clientX;
+                let posY=event.clientY;
+                console.log("x=", posX, "y=", posY);
+
+                //우주선의 위치를 지정
+                x=posX;
+                y=posY;
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>
